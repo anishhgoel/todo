@@ -12,6 +12,25 @@ router.get('/', async(req, res)=>{
 });
 
 
+
+router.get('/:id', async(req, res)=>{
+    try {
+        const todos = await todo_model.findById(req.params.id)
+        if (!todos){
+            return res.status(400).json({error: "to-do id does not exist"})
+        }
+        res.json(todos);
+    } catch(error){
+        console.error("Error fetching by id", error);
+        if (error.name === 'CastError' && error.kind === 'ObjectId') {
+            return res.status(400).json({ error: 'Invalid to-do ID' }); // 400 Bad Request for invalid IDs
+          }
+        res.status(500).json({ error: 'Failed to fetch to-do' }); // 500 Internal Server Error
+    }
+})
+
+
+
 router.post('/', async(req, res)=>{
     try{
         const {title, description}= req.body
