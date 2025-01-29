@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const todoRoutes = require('./routes/todos')
 
 const app = express();
+app.use(express.json());
 const PORT =  process.env.PORT || 3000;
 
 

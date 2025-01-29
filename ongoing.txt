@@ -1,0 +1,17 @@
+first I initalize a npm init -y then make a server.js with basic server code and install dependencies mongoose and express
+
+Now configure mongoose:
+first import mongoose library
+then connect to mongoose library. remember we need to initailize an express server first and then connect to mongoose.
+
+
+now i will create the model for mongoose
+
+now its time for the routes
+
+Made get route. FOr api, its best to name route preceeded by api. something like /api/todos
+
+Making post route.
+Rememeber as we change location, api address changes. SO sometimes mongo db won't work as with change of location, monogodb will throw error
+that we are trying to access databse from a location which is not whitelisted. We can change the security options in mongodb but it is not preferred for production.'
+This is called whitelisting. Its an extra security layer, even when username and password are compromised.
