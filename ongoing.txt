@@ -15,3 +15,14 @@ Making post route.
 Rememeber as we change location, api address changes. SO sometimes mongo db won't work as with change of location, monogodb will throw error
 that we are trying to access databse from a location which is not whitelisted. We can change the security options in mongodb but it is not preferred for production.'
 This is called whitelisting. Its an extra security layer, even when username and password are compromised.
+In production only add current ip address, while in developement can use add Allow access from anywhere but this is not secure 
+
+So there was another issue, while testing in postman. When i chose raw, in dropdown in also need to specify that it is json
+
+After fixing above one more issue. The issue was that we need to make sure that we have :  app.use(express.json()); Also add this before the routes. 
+This is used as: express.json() is a middleware function. Middleware functions in Express.js are like interceptors. They sit in between the incoming request and your route handlers. They have the opportunity to examine and modify the request (or even send a response directly) before it reaches your route handler.
+
+
+In postman get is also working. Now I will implement an endpoint to grab with an id
+
+get id api works. Now I think we do not need to expose the id in url. also the users do not have to know the id stored in mongodb. So will add a uuid for users to be able to see the id for task and make changes

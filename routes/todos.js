@@ -34,10 +34,21 @@ router.get('/:id', async(req, res)=>{
 router.post('/', async(req, res)=>{
     try{
         const {title, description}= req.body
+        let nextTaskNumber = 1;
+
+        const highestTaskNumberDoc = await todo_model.findOne().sort({ task_number: -1 }).limit(1);
+
+        if (highestTaskNumberDoc) { // Check if a document with task_number exists
+            nextTaskNumber = highestTaskNumberDoc.task_number + 1;
+        }
+
+       
         const newTodo = new todo_model({
-            title,
-            description
-        })
+            title : title,
+            description : description,
+            task_number : nextTaskNumber,
+        });
+
         const savedTodo = await newTodo.save()
         res.status(201).json(savedTodo);
     }

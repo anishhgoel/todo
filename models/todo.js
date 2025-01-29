@@ -16,6 +16,11 @@ const todoSchema = new mongoose.Schema({
         type : Date,
         default : Date.now,
     },
+    task_number: {
+        type: Number,
+        unique: true, 
+        default: 0,
+      },
 })
 
 module.exports  = mongoose.model('todo_model', todoSchema)
