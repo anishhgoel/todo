@@ -83,6 +83,24 @@ router.patch('/:id', async(req, res)=>{
     res.status(500).json({error: "Failed to update- to-do"})
 }
 
+});
+
+
+
+router.delete('/:id', async(req, res)=>{
+    try{
+        const deletedTodo = await todo_model.findByIdAndDelete(req.params.id)
+        if (!deletedTodo){
+            return res.status(400).json({error : "To-do item not found"})
+        }
+        res.status(204).end();
+    } catch (error){
+        console.error("Error deleting todo", error)
+        if (error.name === 'CastError' && error.kind === 'ObjectId'){
+            return res.status(400).json({ error: 'Invalid to-do ID' });
+        }
+        res.status(500).json({ error: 'Failed to delete to-do' });
+    }
 })
 
 
