@@ -58,4 +58,35 @@ router.post('/', async(req, res)=>{
     }
 });
 
+
+
+
+router.patch('/:id', async(req, res)=>{
+    try{
+
+    const {title, description, completed} = req.body
+    const updatedTodo = await todo_model.findByIdAndUpdate(
+        req.params.id,
+        {title, description, completed},
+        {new: true, runValidators : true}
+    );
+    if (!updatedTodo){
+        return res.status(400).json({error :  "To-do item not found"
+        })
+    }
+    res.json(updatedTodo)
+} catch(error){
+    console.error("Error updating todo", error)
+    if (error.name === 'CastError' && error.kind === 'ObjectId'){
+        return res.status(400).json({ error: 'Invalid to-do ID' });
+    }
+    res.status(500).json({error: "Failed to update- to-do"})
+}
+
+})
+
+
+
+
+
 module.exports = router
