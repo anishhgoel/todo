@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose')
+const path = require('path');
 const todoRoutes = require('./routes/todos')
 require('dotenv').config();
 
@@ -24,9 +25,15 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use('/api/todos', todoRoutes)
 
-app.get('/', (req, res) => {
-    res.send('Hello from the To-Do App API!');
-  });
+// app.get('/', (req, res) => {
+//     res.send('Hello from the To-Do App API!');
+//   });
+  
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
   
 
 app.listen(PORT,() => {
