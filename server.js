@@ -7,12 +7,12 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong!' });
   });
 
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB Atlas'))
@@ -22,9 +22,7 @@ mongoose.connect(process.env.MONGODB_URI)
   });
 
 
-
 app.use('/api/todos', todoRoutes)
-
 
 app.get('/', (req, res) => {
     res.send('Hello from the To-Do App API!');
